@@ -1,0 +1,32 @@
+﻿# Ignore private or local material by default.
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local exports and temporary files
+*.tmp
+*.bak
+*.log
+exports/
+local/
+private/
+
+# Safety: keep filled personal memory files out of this public template by default.
+fact/events/*.md
+feeling/by_event/*.md
+session/**/*.md
+support/by_event/*.md
+
+# Keep indexes and sanitized examples trackable.
+!fact/index.md
+!feeling/index.md
+!support/index.md
+!inbox/unresolved.md
+!examples/**/*.md
