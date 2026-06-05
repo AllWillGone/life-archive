@@ -1,14 +1,27 @@
-﻿# 2026-01-Example Learning Project
+﻿# 2026-01-示例学习计划
 
-Start: 2026-01
-Status: example
-Related topics: learning, creative work
-Last updated: 2026-06-05
+开始时间：2026-01
+结束时间：未结束
+状态：示例
+相关人物：示例使用者
+相关主题：学习兴趣、长期记录、创造性工作
+最近更新：2026-06-06
 
-## Record
+## 记录
 
-In January 2026, the example user began a small learning project after discovering a subject that felt personally meaningful. They collected resources, tried a first exercise, and noticed that a structured archive helped them remember why the project mattered.
+- 2026 年 1 月，示例使用者开始了一个小型学习计划，因为某个主题让他感觉有长期探索的意义。
+- 示例使用者收集了一些入门资料，并完成了第一次练习。
+- 完成第一次练习后，示例使用者发现结构化记录能帮助自己记住这个计划为什么重要。
 
-## Related Files
+## 时间线
 
-- `examples/feeling/by_event/2026-01-example-learning-project.md`
+- 2026-01：示例使用者开始小型学习计划，收集资料并完成第一次练习。
+
+## 不确定或待澄清
+
+- 具体开始日期未记录。
+- 这个学习计划是否会发展成长期项目仍不确定。
+
+## 相关文件
+
+- [对应情绪记录](../../feeling/by_event/2026-01-example-learning-project.md)

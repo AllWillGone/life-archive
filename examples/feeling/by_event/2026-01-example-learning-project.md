@@ -1,8 +1,37 @@
-﻿# 2026-01 Example Learning Project Feelings
+﻿# 2026-01-示例学习计划情绪记录
 
-linked_fact: `examples/fact/events/2026-01-example-learning-project.md`
-Last updated: 2026-06-05
+linked_fact: `../../fact/events/2026-01-example-learning-project.md`
+最近更新：2026-06-06
 
-## Emotional Trajectory
+## 情绪轨迹
 
-At first, the example user felt curious but unsure whether the interest would last. After completing a small exercise, the uncertainty became calmer because the project had a visible next step.
+最开始，示例使用者对这个学习计划感到好奇，但也不确定兴趣能否持续。完成第一次练习后，这种不确定感有所下降，因为计划开始出现一个可以继续推进的具体方向。
+
+## 2026-01
+
+### 情绪与身体反应
+
+- 示例使用者一开始感到好奇和轻微不确定。
+- 完成第一次练习后，情绪变得更稳定，也更愿意继续探索。
+
+### 触发点
+
+- 触发兴趣的是某个让示例使用者觉得有长期意义的主题。
+- 第一次练习完成后，具体成果降低了原本的犹豫。
+
+### 当时理解
+
+- 示例使用者意识到，自己不只是想收集资料，也需要留下“为什么开始”的线索。
+- 示例使用者把结构化记录理解为维持长期兴趣的一种辅助方式。
+
+### 需要或愿望
+
+- 示例使用者希望未来回看时，能快速理解自己当时为什么对这个主题产生兴趣。
+
+### 行为表现
+
+- 示例使用者收集资料、完成练习，并把这件事写入 LifeArchive 示例结构。
+
+## 不确定或待澄清
+
+- 示例使用者后续是否继续这个计划尚未记录。
