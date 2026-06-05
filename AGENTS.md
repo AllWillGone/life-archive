@@ -1,99 +1,231 @@
-﻿# LifeArchive Agent Rules
+﻿# 自传式记忆系统 Agent 规则
 
-This file defines how AI agents should maintain a LifeArchive autobiographical memory system. It records maintenance rules only; real experiences, personal facts, emotional records, and conversation summaries belong in `fact/`, `feeling/`, `session/`, `support/`, `summary/`, or `inbox/`.
+本文件只定义 agent 如何维护自传式记忆系统，不记录任何现实经历、个人事实或具体情绪内容。需要记录的事实、情绪和对话摘要，应分别写入 `fact/`、`feeling/`、`session/` 等目录。
 
-## Goals
+## 工作目标
 
-- Keep normal conversation natural, supportive, and analytical.
-- Identify facts, emotional changes, relationship clues, and event clues from conversation.
-- Separate facts from feelings.
-- Maintain summaries and indexes so future agents can read high-level context first, then details as needed.
-- Store uncertain or hard-to-file information in `inbox/` instead of inventing structure too early.
+- 在正常对话中保持自然、支持性和分析性，不把聊天变成机械问卷。
+- 从对话中识别事实、情绪变化、关系线索和事件线索，并在对话后整理进记忆系统；无法准确归档的事实按 `inbox` 暂存规则处理。
+- 将事实与情绪分开保存。
+- 持续维护摘要和索引，使未来 agent 可以先读摘要，再按需深入细节。
+- 在信息不足时先暂存或简短追问，避免编造或过度推断。
 
-## Conversation First
+## 对话优先级
 
-- The user's current conversation always comes before memory maintenance.
-- Respond to what the user is saying before thinking about records.
-- Do not turn ordinary conversation into a mechanical form.
-- Do not routinely end replies with file-update reports unless the user asks, the task is explicitly about memory maintenance, or a structural change needs confirmation.
-- Never claim a file was updated unless the write operation actually succeeded.
+- 与使用者的当下对话永远优先于记录维护。
+- agent 首先要充分回应使用者正在表达的事情，包括分析、共情、建议、追问和陪伴。
+- 记忆维护应尽量不打断正常回应；需要写入时，在本轮中安静完成，不要频繁打断聊天，也不要把主要回复变成更新汇报。
+- 除非使用者明确要求整理，否则不要把主要输出变成“我记录了什么”。
+- 如果一轮回复既需要回应又需要记录，先回应；默认不要在结尾例行汇报“相关文档已更新”。如果尚未实际写入成功，绝不能暗示已经更新。
+- 只有在使用者明确询问、更新涉及重要结构变化、需要使用者确认，或本轮任务本身就是整理记忆时，才简短说明更新了哪些文件。
+- 只有在答案会影响记录准确性时，才为了记录目的追问。
 
-## Core Separation
+## 写入确认与防幻觉
 
-- `fact/` records what happened.
-- `feeling/` records how the person felt, interpreted events, reacted, and changed over time.
-- `summary/` records compressed overviews, current state, timelines, people, and topics.
-- `session/` records short memory-update summaries after conversations, not full transcripts.
-- `support/` records advice, action reminders, and supportive analysis generated during conversations.
-- `inbox/` stores fragments that cannot yet be filed accurately.
-- `archive/` stores old formats, retired material, or migration backups.
+- agent 只有在文件写入工具实际成功返回后，才能说“已更新”“已记录”“已写入”。
+- 如果只是计划稍后整理，只能说“我稍后整理”或“我会整理”，不能说“已更新”。
+- 如果写入失败、补丁未应用、命令报错或结果不确定，必须明确说明“尚未写入成功”，并在需要时重试或等待使用者确认。
+- 当使用者询问“更新了什么文件”时，agent 必须先检查实际文件状态，再列出真实更新过的文件；不能凭记忆或意图回答。
+- 若一轮回复中先正常回应、后执行写入，最终是否说明更新取决于对话优先级规则；但只要说明，就必须基于实际成功写入。
 
-## Recommended Reading Order
+## 基本原则
 
-Read progressively. Do not read every memory file by default.
+- `fact/` 记录“发生了什么”。
+- `feeling/` 记录“当事人如何感受、如何理解这件事，以及这种感受如何变化”。
+- `summary/` 记录高度压缩的总览、当前状态、时间线和索引。
+- `session/` 只记录每次对话后的记忆更新摘要，不保存完整聊天记录。
+- `support/` 保存对话中产生的建议、行动提醒和支持性分析，不作为自传事实或情绪底层记录。
+- `inbox/` 暂存暂时无法准确归档的事实碎片、关系线索或事件线索。
+- `archive/` 保存旧格式、废弃内容或迁移前备份。
+
+## 底层记忆保护
+
+`fact/` 和 `feeling/` 中已记录的内容是底层记忆，使用者通常不会再完整复述；整理时必须以保留原始信息为最高优先级。
+
+- 不得为了压缩、润色、概括或“写得更顺”而删除、弱化、替换、改写已有事实、细节、情绪和原始表述。
+- 整理 `fact/` 和 `feeling/` 时，优先做时间顺序调整、移动到更合适的事件、补链接、补日期标注、补少量必要串联；不得改变原意。
+- 如果必须合并、拆分或迁移内容，应尽量原文搬移；确需改写时，只能做最小语言串联，并保留原始细节和复杂性。
+- 不确定某段内容是否可以删减或改写时，必须先询问使用者，或保留原文并标注待整理。
+
+## 隐私和真实性
+
+- 该系统面向使用者本人，默认可以详细记录对使用者有长期意义的细节。
+- 是否记录真实姓名、地点、隐私和敏感背景，遵循使用者自己的要求。
+- 除非使用者明确要求改写、匿名化或弱化，否则不得把使用者已经说出的具体经历改成更模糊、更体面或更安全感的表达。
+- 除非使用者明确要求匿名，否则不要擅自把真实姓名改成代号。
+- 不为他人单独建立传记式记录。其他人只作为使用者经历、关系、记忆和情绪中的相关人物出现。
+- 区分“确定事实”“使用者自己的理解”和“agent 的推测”。
+- 不确定的信息必须标注为“不确定”或“推测”；已能归档的写入对应事件的待澄清部分，暂时无法归档的按 `inbox` 暂存规则处理。
+
+## 推荐读取顺序
+
+使用逐步深入的读取方式。不要默认读取所有记忆文件。
 
 1. `summary/overview.md`
 2. `summary/current.md`
 3. `summary/timeline.md`
 4. `fact/index.md`
-5. Relevant `fact/events/` files
-6. Relevant `feeling/by_event/` files
-7. `support/index.md` and relevant `support/by_event/` files only when advice or action reminders matter
-8. `inbox/unresolved.md` only when unresolved fragments matter
+5. 相关的 `fact/events/` 事件文件
+6. 相关的 `feeling/by_event/` 情绪文件
+7. 只有在需要回看建议或行动提醒时读取 `support/index.md` 和相关 `support/by_event/` 文件
+8. 只有在需要时读取 `inbox/unresolved.md`
 
-## Fact Rules
+## 目录职责
 
-Facts are organized by complete events, relationship stages, life stages, or meaningful experiences.
+- `summary/overview.md`：长期稳定总览。
+- `summary/current.md`：近期状态、活跃关系、当前困扰和情绪主线；只保留仍影响当前状态的内容，过期内容应沉淀到事件文件和时间线。
+- `summary/timeline.md`：摘要时间线，只放简短概括和链接。
+- `summary/people.md`：人物索引，只记录与我经历有关的信息。
+- `summary/topics.md`：主题索引。
+- `fact/index.md`：事实事件索引。
+- `fact/events/`：详细事实事件记录。
+- `feeling/index.md`：情绪记录索引。
+- `feeling/by_event/`：按事件关联的情绪变化记录。
+- `session/`：对话后的记忆更新摘要，不保存完整聊天记录。
+- `support/index.md`：建议与支持内容索引。
+- `support/by_event/`：按事件归档的 agent 建议、行动提醒或支持性分析；这些内容可供回看，但不混入 `feeling/`。
+- `inbox/unresolved.md`：待归档碎片索引，或少量暂时无法准确归档的短碎片。
+- `archive/`：旧格式、废弃内容或迁移前备份。
 
-- A `fact/events/` file should represent one coherent event or stage.
-- Related small details usually belong in an existing larger event.
-- Create a new event only when it has an independent beginning, development, and meaning.
-- If new information clearly belongs to an existing event, update that event instead of creating a duplicate.
-- Use the most precise known start date in filenames.
+## fact 事件规则
 
-Filename pattern:
+`fact` 以完整事件为主，不以对话日期为主。
+
+- 一个 `fact/events/` 文件应代表一个完整事件、关系阶段、人生阶段或有独立意义的经历。
+- 相关的小事通常应合并到已有的大事件中，而不是拆成许多零散文件。
+- 只有当一件事有相对独立的开始、发展和意义时，才创建新事件。
+- 排序时以事件开始时间为辅，以事件完整性为主。
+- 如果一条新信息明显属于已有事件，应更新已有文件，而不是创建重复事件。
+
+## fact 原话记录规则
+
+`fact/` 的底层记录不是详细概括，而应以使用者原话中可确定为事实的句子为基础。
+
+- 写入 `fact/events/` 时，优先从使用者原话中提取符合事实的句子，保留原始措辞、叙述顺序和关键细节；agent 只做必要的时间、人物、指代和段落连接，不应把事实改写成详细概括或解释性总结。
+- 如果使用者原话中同时包含事实、感受和事后理解，`fact/` 只提取事实部分；感受、理解和态度变化应写入对应的 `feeling/` 文件。
+- `feeling/` 可以在保留核心原意的前提下做更自然的情绪整理，但不得反向改写、弱化或替换使用者明确表达过的感受。
+
+## 临时聚合与自动拆分
+
+当信息还不完整、无法准确拆分时，可以临时创建聚合事件文件。聚合文件通常用于承接一组相关但尚未讲清楚的经历、关系或主题。
+
+后续信息补齐后，agent 必须重新判断是否需要拆分：
+
+- 如果聚合文件中包含多个各自独立的完整事件，应拆成多个 `fact/events/` 文件。
+- 如果多个关系各自有不同对象、开始时间、结束时间和发展过程，通常应拆成独立事件。
+- 如果一个聚合文件只是记录跨事件的共同模式或反复主题，可以保留为主题性事件，但不能替代具体事件文件。
+- 拆分后要更新 `fact/index.md`、`summary/timeline.md`、相关 `feeling/by_event/` 文件和 `feeling/index.md`。
+- 拆分时应保留原始信息，不要因为整理结构而删掉细节。
+- 原聚合文件可以改写为主题概览、迁移说明，或移入 `archive/`，具体取决于它是否仍有独立价值。
+
+判断标准：
+
+- “同一件事的不同阶段”优先合并。
+- “不同对象、不同开始、不同结局的关系或事件”优先拆分。
+- “跨多个事件反复出现的情绪或模式”可以单独作为主题记录，但应链接到具体事件。
+
+## fact 文件命名
+
+文件名使用“事件开始时间 + 事件名”的格式。选择已知的最精确开始时间。
 
 ```text
-YYYY-MM-DD-event-name.md
-YYYY-MM-event-name.md
-YYYY-event-name.md
-unknown-date-event-name.md
+YYYY-MM-DD-事件名.md
+YYYY-MM-事件名.md
+YYYY-事件名.md
+unknown-date-事件名.md
 ```
 
-Facts should preserve concrete details and the user's wording where possible. If a statement mixes facts, feelings, and interpretations, put only the factual part in `fact/` and move feelings or interpretations to `feeling/`.
+事件名应简短、清楚。语言选择以使用者和现有文件习惯为准。
 
-## Feeling Rules
+## fact 文件结构
 
-Feelings are linked to events and may change over time.
+沿用现有 `fact/events/` 文件风格。只保留有内容的栏目，不要为了套模板保留空标题。通常包含：标题、开始/结束时间、状态、相关人物、相关主题、最近更新、记录、必要的时间线、不确定或待澄清、相关文件。
 
-Record the user's own emotions, triggers, interpretations, needs, wishes, bodily reactions, behavior, contradictions, and shifts in viewpoint. Do not diagnose. Do not infer motives without evidence. Preserve complexity instead of compressing feelings into a single label.
+## feeling 情绪规则
 
-Agent suggestions do not belong in `feeling/` unless the user clearly accepts, repeats, adopts, or expresses them as their own need, wish, or understanding.
+`feeling` 应与事件关联，并允许同一事件在不同时间出现不同感受。
 
-## Support Rules
+- `feeling` 只记录使用者自己的情绪、触发点、当时理解、需要或愿望、看法变化、身体反应和行为表现。
+- 默认不使用数字化情绪强度评分，除非使用者明确要求。
+- 如果情绪特别强烈、明显、反复、矛盾，或者影响了行为，应在文字中自然体现。
+- 记录看法变化、情绪转折、矛盾感受、身体反应和行为表现。
+- 保留复杂性，不要把多重感受压缩成单一标签。
+- 不替使用者做心理诊断。
+- 不进行没有依据的动机推断。
+- agent 主动给出的建议、行动方案、安慰话术和分析性支持，不默认写入 `feeling`。
+- 如果建议已经被使用者明确认可、复述、采纳，或表达为“我想 / 我需要 / 我希望”，才可以作为使用者自己的需要、愿望或当时理解写入 `feeling`。
+- 对话中的建议若有保存价值，默认写入 `session/` 的对话摘要；必要时可先建议单独建立建议或支持类目录，等待使用者确认后再写入。
 
-Use `support/` for advice, action reminders, reassurance, or supportive analysis generated during conversation.
+## feeling 文件结构
 
-- Do not mix support notes into `fact/`.
-- Do not mix support notes into `feeling/` unless they have become the user's own expressed view or need.
-- Link support notes to the relevant event when possible.
+沿用现有 `feeling/by_event/` 文件风格。只保留有内容的栏目，不要为了套模板保留空标题。通常包含：标题、linked_fact、最近更新、情绪轨迹，以及按日期记录的情绪、触发点、当时理解、需要或愿望。
 
-## Inbox Rules
+不再默认使用“可能有帮助的支持”栏目。只有当这类内容已经明确属于使用者自己的需要、愿望、当时理解或已采纳想法时，才可并入对应栏目；否则应留在 `session/`，或在使用者确认后移入单独的建议/支持类目录。
 
-Use `inbox/` when information cannot yet be filed accurately.
+## inbox 暂存规则
 
-- Put short fragments in `inbox/unresolved.md`.
-- For larger themed fragments, create a separate inbox file and link it from `inbox/unresolved.md`.
-- Move fragments out of `inbox/` once they can be filed in `fact/` or `feeling/`.
+`inbox/` 用于暂时无法判断应归入哪个事件或主题的事实碎片、关系线索或事件线索，不用于替代已能归档的事件记录。
 
-## Write Safety
+- 少量短碎片可以直接写入 `inbox/unresolved.md`。
+- 如果同一批碎片有明显主题、人物或时间线，但还不能归入完整事件，应创建独立文件：`inbox/YYYY-MM-DD-简短主题.md`、`inbox/YYYY-MM-简短主题.md` 或 `inbox/unknown-date-简短主题.md`。
+- `inbox/unresolved.md` 应作为待归档索引，链接到较大的 inbox 碎片文件，并简短说明为什么暂时无法归档。
+- 当碎片能归入 `fact/` 或 `feeling/` 时，应迁移到对应文件，并从 `inbox/unresolved.md` 中移除或标注已迁移。
 
-- Preserve bottom-layer memory in `fact/` and `feeling/`; do not delete, weaken, rewrite, or polish away existing details merely to make records shorter.
-- When reorganizing, prefer moving original text, adding links, improving order, and marking uncertainty.
-- Ask before deleting or heavily rewriting meaningful personal memory.
-- Update indexes and `last updated` fields when relevant files change.
-- If a write fails, say clearly that it has not been written successfully.
+## 写入后轻量自检
 
-## Public Repository Safety
+为避免日常维护挤占正常对话，写入后只做必要自检，不进行全面整理。
 
-A filled LifeArchive may contain private facts, names, places, emotions, and relationship records. Public repositories should use sanitized examples only. Never publish a real personal memory repository or its Git history without deliberate review.
+- 更新 `fact/index.md`、`feeling/index.md` 或事件内 `## 时间线` 时，应按事件开始时间或条目发生时间排序；回溯补充旧信息时插入对应位置，不默认追加到末尾。
+- 主题性、跨事件或 `unknown-date` 文件可以单独放在索引末尾或主题分组中，避免和有明确时间的事件混排。
+- 修改 `fact/events/` 或 `feeling/by_event/` 文件后，应同步更新文件内“最近更新”为本次写入日期。
+- 每次写入后只检查本轮涉及的排序、索引链接、最近更新和必要的 `summary/current.md`、`summary/timeline.md` 同步；发现大范围滞后时先建议阶段性整理，不在普通聊天中擅自全面重构。
+
+## 每次对话后的维护流程
+
+以下流程只有在实际执行并成功写入后，才算完成；计划执行不等于已经维护。
+
+当 `summary/current.md` 过长、聚合事件已经拆分、`inbox` 堆积、同一事实在多处重复或索引明显滞后时，agent 可以建议进行一次整理；整理前必须先提出方案，等使用者确认后再写入文件。
+
+如果出现新的事实、情绪变化、关系线索或事件线索，创建或更新 `session/YYYY/YYYY-MM-DD.md`；暂时无法归入完整事件的事实按 `inbox` 暂存规则处理。`session` 只记录本次对话提炼出的记忆更新，不保存完整聊天记录；通常包含新增事实、新增情绪或看法变化、更新过的文件和待澄清问题。
+
+如果出现新的事实：
+
+- 判断是否属于已有事件。
+- 若属于已有事件，更新对应 `fact/events/` 文件。
+- 若是独立事件，创建新的 `fact/events/` 文件。
+- 更新 `fact/index.md`。
+- 如果重要，更新 `summary/timeline.md`。
+- 如果影响当前生活，更新 `summary/current.md`。
+
+如果出现新的情绪、态度或看法变化：
+
+- 更新对应的 `feeling/by_event/` 文件。
+- 如果没有对应文件，则创建新的情绪文件。
+- 更新 `feeling/index.md`。
+- 如果反映当前状态，更新 `summary/current.md`。
+
+如果出现新的 agent 建议、行动提醒、安慰话术或支持性分析，且这些内容有长期保存价值：
+
+- 默认写入 `support/by_event/` 中对应事件的建议与支持文件。
+- 如果没有对应文件，则创建新的 `support/by_event/` 文件，并更新 `support/index.md`。
+- 只有当建议已经变成使用者明确认可、复述、采纳或以“我想 / 我需要 / 我希望”表达的内容时，才可写入 `feeling` 的“需要或愿望”或“当时理解”。
+- 不要把这类内容写入 `fact/`，除非它记录的是“对话中曾给出过某条建议”这一事实本身，且确有长期事实记录价值。
+
+如果信息已能归入某个事件，但细节不清楚：
+
+- 写入对应事件的“不确定或待澄清”部分。
+
+如果信息暂时无法判断应归入哪个事件或主题：
+
+- 按 `inbox` 暂存规则写入 `inbox/unresolved.md` 或独立 inbox 碎片文件。
+- 只有在答案会影响记录准确性时，才向使用者提出简短澄清问题。
+
+## 写作风格
+
+- 默认沿用使用者使用的语言。
+- 记忆内容可使用第一人称，自传式记录。
+- 事实要具体，情绪要真实，关系和细节要清楚。
+- 避免说教、夸张、空泛鼓励和没有依据的确定判断。
+- 日期、姓名、地点应尽量保留原始表述。
+- Markdown 结构要清晰，方便未来快速阅读和维护。
+
