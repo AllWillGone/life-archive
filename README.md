@@ -1,60 +1,98 @@
 ﻿# LifeArchive
 
+English | [简体中文](README.zh-CN.md)
+
 A Mnemosyne-inspired autobiographical memory system for AI-assisted reflection.
 
-LifeArchive 是一个自传式记忆系统开源模板，用来长期记录使用者自己的经历、关系、情绪变化和人生线索。它保留了「记忆女神 Mnemosyne」的意象，但使用更直白、容易搜索的项目名。
+LifeArchive is a public template for building a private, long-term memory archive with an AI assistant. It is designed to record lived events, relationships, emotional changes, unresolved fragments, and conversation-derived support while keeping facts and feelings clearly separated.
 
-本仓库只提供规则、目录结构和示例，不应保存真实个人记忆。真正使用时，建议复制为私人仓库；公开分享时，只发布模板或经过彻底清理的版本。
+This repository contains only rules, folder structure, templates, and sanitized examples. It should not contain real personal memories. For actual use, copy this template into a private repository. For public sharing, publish only the template or a thoroughly cleaned copy.
 
-使用方式：
+## Why This Exists
 
-- `summary/` 用来快速同步整体情况。
-- `fact/` 按完整事件记录事实，以事件开始时间和事件名排序。
-- `feeling/` 记录使用者对同一事件在不同时间节点的情绪、看法和变化。
-- `session/` 只保存每次对话后的记忆更新摘要，不保存完整聊天记录。
-- `support/` 保存对话中产生的建议、行动提醒和支持性分析，不作为自传事实或情绪底层记录。
-- `inbox/` 暂存暂时无法归档的事实碎片、关系线索或事件线索。
-- `archive/` 保存旧格式、废弃内容或迁移前备份。
+Most AI memory systems either flatten personal history into short summaries or mix facts, emotions, advice, and guesses into one pile. LifeArchive takes a slower autobiographical approach:
 
-未来 agent 进入本目录工作时，应先阅读 `AGENTS.md`，再按摘要到细节的顺序读取记忆。`AGENTS.md` 中包含 `fact/events/` 和 `feeling/by_event/` 的推荐文件结构；也可以直接复制 `docs/templates/` 下的空模板。
+- `fact/` records what happened.
+- `feeling/` records how the user felt, understood, reacted, and changed over time.
+- `summary/` keeps compressed overviews, current state, timelines, people, and topics.
+- `session/` stores post-conversation memory update summaries, not full chat logs.
+- `support/` stores advice, action reminders, and supportive analysis without mixing them into core autobiographical memory.
+- `inbox/` holds fragments that cannot yet be safely filed.
+- `archive/` keeps old formats, deprecated content, or migration backups.
 
-## 新对话启动提示词
+The guiding principle is simple: preserve the user's underlying memory without rewriting it into something cleaner, safer, or less true.
 
-每次重新开启对话时，可以先发送。请把 `<你的 LifeArchive 路径>` 替换成实际路径；如果 agent 已经在仓库目录中工作，也可以直接写“本仓库的 AGENTS.md”。
-
-```text
-请先按 <你的 LifeArchive 路径>\AGENTS.md 读取我的记忆系统，然后像平常一样优先和我聊天、分析和回应我。记忆维护不要压过正常回应：当对话中出现新的事实、情绪变化、关系线索或事件线索时，在本轮中按规则安静更新 <你的 LifeArchive 路径> 下的记忆文件；能归入完整事件的写入对应事件，暂时无法准确归档的先写入 inbox。agent 主动给出的建议、行动提醒或支持性分析默认不要写入 feeling，若需要长期保留，应写入 support。默认不要在回复结尾主动汇报“已记录”或“已更新”，除非我明确询问、更新涉及重要结构变化，或本轮任务本身就是整理记忆。若需要说明更新情况，必须先确认文件实际写入成功，不能凭计划或印象声称已经更新。
-```
-
-## 周期整理提示词
-
-每隔一段时间，或发现索引、排序、摘要开始变乱时，可以发送：
+## Repository Layout
 
 ```text
-请按 <你的 LifeArchive 路径>\AGENTS.md 读取并整理我的自传式记忆系统。这次任务是周期整理，不是普通聊天；但仍要遵守对话优先、真实性、写入确认、底层记忆保护和事实/情绪分离规则。fact/ 和 feeling/ 里的既有内容是我的底层记忆，我通常不会再完整复述；整理时不要为了压缩、润色或概括而删除、弱化、替换、改写已有事实、细节、情绪和原始表述。原则上只做时间顺序调整、原文搬移、补链接、补日期标注和少量必要语言串联；不确定能否删改时，先保留并询问我。
-
-请先只审计，不要写入。按推荐读取顺序检查：summary/overview.md、summary/current.md、summary/timeline.md、fact/index.md、相关 fact/events/、feeling/index.md、相关 feeling/by_event/、summary/people.md、summary/topics.md、support/index.md、相关 support/by_event/、inbox/unresolved.md，以及最近的 session 文件。
-
-重点检查并提出方案：
-1. fact 与 feeling 是否混写；是否有事实应迁移到 fact，情绪和看法变化应迁移到 feeling。
-2. fact/events 是否按完整事件、关系阶段或人生阶段组织；是否有重复事件、过碎事件、该合并的小事，或聚合事件已经可以拆分。
-3. fact/index.md、feeling/index.md、summary/timeline.md 和事件内 ## 时间线 是否按事件开始时间或条目发生时间排序；回溯补充的信息是否被错误追加到末尾。
-4. 修改过的 fact/events 和 feeling/by_event 文件内“最近更新”是否滞后。
-5. summary/current.md 是否过长、过细或像事件合集；过期内容是否应沉淀到事件文件和 summary/timeline.md。
-6. summary/overview.md、summary/people.md、summary/topics.md 是否需要补充、压缩、去重或修正链接。
-7. inbox/unresolved.md 中是否有碎片已经可以归档；是否有不确定信息应该转入对应事件的“不确定或待澄清”部分。
-8. support/ 是否只保存建议、行动提醒和支持性分析；是否有内容应迁回 feeling 的“需要或愿望”，或有建议仍误留在 fact/feeling/summary 中。
-9. session 文件是否只记录本次对话后的记忆更新摘要，没有保存完整聊天记录；是否需要为本次整理创建或更新当天 session 摘要。
-10. 链接、文件名、日期精度、真实姓名、推测/不确定标注和 UTF-8 读写是否一致。
-
-输出时先给我一个简短整理方案：列出建议修改的文件、每类问题的处理办法、是否有需要我确认的拆分/合并/删除/归档决定。等我确认后，再实际写入文件。写入完成后，必须基于实际成功的文件操作简短说明更新了哪些文件；如果有任何写入失败或不确定，明确说明尚未写入成功。
+LifeArchive/
+  AGENTS.md                 # Agent rules for maintaining the memory system
+  README.md                 # English project introduction
+  README.zh-CN.md           # Simplified Chinese project introduction
+  docs/
+    templates/              # Blank file templates
+    public-template-safety.md
+  examples/                 # Sanitized examples
+  summary/                  # Overview, current state, timeline, people, topics
+  fact/
+    index.md
+    events/                 # Event-based factual records
+  feeling/
+    index.md
+    by_event/               # Event-linked emotional records
+  support/
+    index.md
+    by_event/               # Advice and supportive analysis by event
+  session/                  # Post-conversation update summaries
+  inbox/                    # Unresolved fragments
+  archive/                  # Old or migrated material
 ```
 
-## 开源与隐私提醒
+## How To Use
 
-LifeArchive 面向真实、长期、细节化的自传式记录。填充后的个人记忆仓库可能包含姓名、地点、关系、情绪、会话摘要和 Git 历史中的旧版本信息。不要直接公开真实记忆仓库；公开时应使用本模板或经过彻底清理的新仓库。
+1. Copy this repository into a private location.
+2. Ask your AI assistant to read `AGENTS.md` before maintaining the archive.
+3. Start from `summary/overview.md`, `summary/current.md`, and `summary/timeline.md` when restoring context.
+4. File new information by event, not by chat date.
+5. Keep facts, feelings, support, and unresolved fragments in their own places.
+6. Never publish a filled private archive without removing personal data and Git history.
+
+## Starter Prompt
+
+Use this when starting a new conversation. Replace `<your LifeArchive path>` with the actual path.
+
+```text
+Please read <your LifeArchive path>\AGENTS.md first, then talk with me naturally while prioritizing the current conversation. Memory maintenance should not take over the conversation: when new facts, emotional changes, relationship clues, or event clues appear, quietly update the memory files under <your LifeArchive path> during this turn according to the rules. File information into the matching event when possible; if it cannot be safely filed yet, put it in inbox. Advice, action reminders, or supportive analysis from the assistant should not be written into feeling by default; if worth preserving long-term, write them into support. Do not routinely end replies by saying "recorded" or "updated" unless I explicitly ask, the update involves an important structural change, or the task itself is memory organization. If you do mention updates, first verify that the file write actually succeeded. Do not claim a file was updated based only on intention or memory.
+```
+
+## Periodic Cleanup Prompt
+
+Use this occasionally when indexes, summaries, or event boundaries start to drift.
+
+```text
+Please read <your LifeArchive path>\AGENTS.md and audit my autobiographical memory system. This is a periodic cleanup task, not ordinary chat, but still follow the rules for conversation priority, truthfulness, write confirmation, underlying memory protection, and fact/feeling separation. Existing content in fact/ and feeling/ is my underlying memory; I usually will not fully restate it. Do not delete, weaken, replace, polish away, or rewrite existing facts, details, emotions, or original wording merely for compression or style. In principle, only adjust chronology, move original text, add links, add date labels, and add minimal connective wording. When unsure whether something may be deleted or rewritten, keep it and ask me.
+
+Audit only first; do not write files yet. Follow the recommended reading order: summary/overview.md, summary/current.md, summary/timeline.md, fact/index.md, relevant fact/events/, feeling/index.md, relevant feeling/by_event/, summary/people.md, summary/topics.md, support/index.md, relevant support/by_event/, inbox/unresolved.md, and recent session files.
+
+Check for:
+1. Whether fact and feeling are mixed.
+2. Whether fact/events are organized by complete events, relationship stages, or life stages.
+3. Whether indexes, timelines, and internal event timelines are sorted correctly.
+4. Whether "recently updated" fields are stale.
+5. Whether summary/current.md is too long, too detailed, or acting like an event collection.
+6. Whether overview, people, and topics need link fixes, deduplication, or compression.
+7. Whether inbox fragments can now be filed.
+8. Whether support contains only advice, action reminders, and supportive analysis.
+9. Whether session files summarize memory updates without storing full chat logs.
+10. Whether links, filenames, date precision, real names, uncertainty labels, and UTF-8 handling are consistent.
+
+First output a short cleanup proposal: list the files you recommend changing, how each type of issue should be handled, and whether any split, merge, deletion, or archive decision needs my confirmation. Wait for my approval before writing files. After writing, report only the files that were actually updated successfully; if any write failed or is uncertain, say so clearly.
+```
+
+## Privacy Warning
+
+A filled LifeArchive can contain real names, locations, relationships, emotional records, conversation summaries, unresolved fragments, and older private versions in Git history. Treat it as highly private. This public repository is a template; a real archive should normally stay private.
 
 ## License
 
-MIT License. See `LICENSE`.
-
+MIT License. See [LICENSE](LICENSE).
