@@ -277,6 +277,7 @@ linked_fact: `../../fact/events/对应事实事件文件.md`
 - 判断是否属于已有事件。
 - 若属于已有事件，更新对应 `fact/events/` 文件。
 - 若是独立事件，创建新的 `fact/events/` 文件。
+- 如果某个临时状态围绕明确未来节点持续展开，例如考试、展示、约会、见面、旅行或手续办理，应优先归入或创建该节点对应的 `fact/events/` 文件，而不是长期只留在 `session/`；若当下信息不足以判断是否会持续，可先写入 `summary/current.md` 和 `session/`，后续再次出现时再补建或归入事件。
 - 更新 `fact/index.md`。
 - 如果重要，更新 `summary/timeline.md`。
 - 如果影响当前生活，更新 `summary/current.md`。
@@ -312,5 +313,6 @@ linked_fact: `../../fact/events/对应事实事件文件.md`
 - 避免说教、夸张、空泛鼓励和没有依据的确定判断。
 - 日期、姓名、地点应尽量保留原始表述。
 - Markdown 结构要清晰，方便未来快速阅读和维护。
+
 
 

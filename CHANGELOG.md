@@ -1,5 +1,11 @@
 ﻿# Changelog
 
+## [1.0.2] - 2026-06-07
+
+### Added
+
+- Added a future-node filing rule to `AGENTS.md`: temporary states that keep developing around exams, presentations, dates, meetings, travel, or administrative deadlines should be filed into a corresponding `fact/events/` entry instead of remaining only in `session/`.
+
 ## [1.0.1] - 2026-06-06
 
 ### Added
@@ -16,6 +22,7 @@
 - Added directory structure for facts, feelings, summaries, sessions, support notes, inbox fragments, archive material, and examples.
 - Added agent maintenance rules in `AGENTS.md`.
 - Added privacy guidance for keeping real memory repositories private.
+
 
 
 
