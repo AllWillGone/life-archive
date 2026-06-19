@@ -1,9 +1,7 @@
 # Support Index
 
-`support/` is an optional long-term support layer.
+`support/` is not part of the default filing flow.
 
-By default, ordinary advice, action reminders, comfort, and in-the-moment supportive analysis should be kept only briefly in the relevant `session/` summary. Use `support/by_event/` only when the user explicitly wants certain support notes preserved for later review.
+Ordinary advice, action reminders, comfort, and in-the-moment supportive analysis should stay briefly in the relevant `session/` summary. They should not become long-term records unless the user explicitly adopts them as their own needs, wishes, decisions, or current understanding; in that case, file them under `feeling/` or necessary `summary/current.md` according to `AGENTS.md`.
 
-When enabled, this file indexes those long-term support notes by event.
-
-For the public template, real support notes are ignored by default.
+This directory is kept only as a placeholder for users who want to design their own extension. The public template ignores real support notes by default.

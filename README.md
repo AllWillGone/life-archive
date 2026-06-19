@@ -4,7 +4,7 @@ English | [简体中文](README.zh-CN.md)
 
 A Mnemosyne-inspired autobiographical memory system for AI-assisted reflection.
 
-LifeArchive is a public template for building a private, long-term memory archive with an AI assistant. It is designed to record lived events, relationships, emotional changes, unresolved fragments, and post-conversation update summaries while keeping facts and feelings clearly separated.
+LifeArchive is a public template for building a private, long-term memory archive with an AI assistant. It is designed to record lived events, relationships, emotional changes, unresolved fragments, and post-conversation update summaries while keeping facts, feelings, and assistant suggestions clearly separated.
 
 This repository contains only rules, folder structure, templates, and sanitized examples. It should not contain real personal memories. For actual use, copy this template into a private repository. For public sharing, publish only the template or a thoroughly cleaned copy.
 
@@ -15,8 +15,7 @@ Most AI memory systems either flatten personal history into short summaries or m
 - `fact/` records what happened.
 - `feeling/` records how the user felt, understood, reacted, and changed over time.
 - `summary/` keeps compressed overviews, current state, timelines, people, and topics.
-- `session/` stores post-conversation memory update summaries, not full chat logs. Ordinary advice, action reminders, comfort, and in-the-moment analysis are kept here briefly by default.
-- `support/` is an optional long-term support layer for advice, action reminders, and supportive analysis that the user explicitly wants to preserve for later review.
+- `session/` stores post-conversation memory update summaries, not full chat logs. Ordinary advice, action reminders, comfort, and in-the-moment analysis are kept here briefly by default, not as a separate long-term knowledge base.
 - `inbox/` holds fragments that cannot yet be safely filed.
 - `archive/` keeps old formats, deprecated content, or migration backups.
 
@@ -40,9 +39,6 @@ LifeArchive/
   feeling/
     index.md
     by_event/               # Event-linked emotional records
-  support/                  # Optional long-term support layer
-    index.md
-    by_event/               # Advice and supportive analysis by event, if enabled
   session/                  # Post-conversation update summaries
   inbox/                    # Unresolved fragments
   archive/                  # Old or migrated material
@@ -54,7 +50,7 @@ LifeArchive/
 2. Ask your AI assistant to read `AGENTS.md` before maintaining the archive.
 3. Start from `summary/overview.md`, `summary/current.md`, and `summary/timeline.md` when restoring context.
 4. File new information by event, not by chat date.
-5. Keep facts, feelings, session summaries, optional support notes, and unresolved fragments in their own places.
+5. Keep facts, feelings, session summaries, and unresolved fragments in their own places.
 6. Never publish a filled private archive without removing personal data and Git history.
 
 ## Starter Prompt
@@ -66,7 +62,7 @@ Best for: ordinary conversations where the assistant should understand the archi
 Not for: large cleanup, splitting or merging events, or broad summary compression.
 
 ```text
-Please read <your LifeArchive path>\AGENTS.md first, then talk with me naturally while prioritizing the current conversation. Memory maintenance should not take over the conversation: when new facts, emotional changes, relationship clues, or event clues appear, quietly update the memory files under <your LifeArchive path> during this turn according to the rules. File information into the matching event when possible; if it cannot be safely filed yet, put it in inbox. Advice, action reminders, comfort, or supportive analysis from the assistant should not be written into fact, feeling, or summary by default, and should not create a separate long-term support index unless I explicitly want that. Keep ordinary advice briefly in the day's session summary. Only when a suggestion has become something I clearly accept, repeat, adopt, or express as "I want / I need / I hope" should it be written as my own need, wish, decision, or current understanding in feeling or necessary summary/current. Do not routinely end replies by saying "recorded" or "updated" unless I explicitly ask, the update involves an important structural change, or the task itself is memory organization. If you do mention updates, first verify that the file write actually succeeded. Do not claim a file was updated based only on intention or memory.
+Please read <your LifeArchive path>\AGENTS.md first, then talk with me naturally while prioritizing the current conversation. Memory maintenance should not take over the conversation: when new facts, emotional changes, relationship clues, or event clues appear, quietly update the memory files under <your LifeArchive path> during this turn according to the rules. File information into the matching event when possible; if it cannot be safely filed yet, put it in inbox. Advice, action reminders, comfort, or supportive analysis from the assistant should not be written into fact, feeling, or summary by default, and should not create a separate long-term index. Keep ordinary advice briefly in the day's session summary. Only when a suggestion has become something I clearly accept, repeat, adopt, or express as "I want / I need / I hope" should it be written as my own need, wish, decision, or current understanding in feeling or necessary summary/current. Do not routinely end replies by saying "recorded" or "updated" unless I explicitly ask, the update involves an important structural change, or the task itself is memory organization. If you do mention updates, first verify that the file write actually succeeded. Do not claim a file was updated based only on intention or memory.
 ```
 
 ## Periodic Cleanup Prompt
@@ -80,7 +76,7 @@ Not for: ordinary conversation, or when you only want to lightly compress `summa
 ```text
 Please read <your LifeArchive path>\AGENTS.md and audit my autobiographical memory system. This is a periodic cleanup task, not ordinary chat, but still follow the rules for conversation priority, truthfulness, write confirmation, underlying memory protection, and fact/feeling separation. Existing content in fact/ and feeling/ is my underlying memory; I usually will not fully restate it. Do not delete, weaken, replace, polish away, or rewrite existing facts, details, emotions, or original wording merely for compression or style. In principle, only adjust chronology, move original text, add links, add date labels, and add minimal connective wording. When unsure whether something may be deleted or rewritten, keep it and ask me.
 
-Audit only first; do not write files yet. Follow the recommended reading order: summary/overview.md, summary/current.md, summary/timeline.md, fact/index.md, relevant fact/events/, feeling/index.md, relevant feeling/by_event/, summary/people.md, summary/topics.md, support/index.md and relevant support/by_event/ only if the optional support layer is enabled, inbox/unresolved.md, and recent session files.
+Audit only first; do not write files yet. Follow the recommended reading order: summary/overview.md, summary/current.md, summary/timeline.md, fact/index.md, relevant fact/events/, feeling/index.md, relevant feeling/by_event/, summary/people.md, summary/topics.md, inbox/unresolved.md, and recent session files.
 
 Check for:
 1. Whether fact and feeling are mixed.
@@ -90,7 +86,7 @@ Check for:
 5. Whether summary/current.md is too long, too detailed, or acting like an event collection.
 6. Whether overview, people, and topics need link fixes, deduplication, or compression.
 7. Whether inbox fragments can now be filed.
-8. If the optional support layer is enabled, whether support contains only advice, action reminders, and supportive analysis; otherwise, whether advice or supportive analysis has been incorrectly left in fact, feeling, or summary. Only keep such material in feeling or summary/current when it has become my accepted, repeated, adopted, or explicitly stated need, wish, decision, or current understanding.
+8. Whether advice, action reminders, comfort, or supportive analysis from the assistant has been incorrectly left in fact, feeling, or summary. Only keep such material in feeling or summary/current when it has become my accepted, repeated, adopted, or explicitly stated need, wish, decision, or current understanding.
 9. Whether session files summarize memory updates without storing full chat logs.
 10. Whether links, filenames, date precision, real names, uncertainty labels, and UTF-8 handling are consistent.
 
