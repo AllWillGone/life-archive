@@ -23,4 +23,4 @@
 ## 相关文件
 
 - [对应情绪记录](../../feeling/by_event/对应情绪文件.md)
-- [相关支持记录](../../support/by_event/对应支持文件.md)
+- [相关支持记录](../../support/by_event/对应支持文件.md)（如果启用了可选 `support/` 长期支持层）
