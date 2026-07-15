@@ -18,15 +18,27 @@ exports/
 local/
 private/
 
-# Safety: keep filled personal memory files out of this public template by default.
-fact/events/*.md
-feeling/by_event/*.md
-session/**/*.md
-support/by_event/*.md
+# Defense in depth for a public-template checkout. These patterns affect only
+# untracked files; they do not protect starter summaries or indexes already
+# tracked by Git. Use a separate private repository for real memory.
+fact/events/**
+!fact/events/.gitkeep
+feeling/by_event/**
+!feeling/by_event/.gitkeep
+people/**
+!people/.gitkeep
+session/**
+!session/.gitkeep
+inbox/**
+!inbox/.gitkeep
+!inbox/unresolved.md
+archive/**
+!archive/old/
+!archive/old/.gitkeep
+support/by_event/**
+!support/by_event/.gitkeep
 
-# Keep indexes and sanitized examples trackable.
+# Keep public-template entry points and synthetic examples trackable.
 !fact/index.md
 !feeling/index.md
-!support/index.md
-!inbox/unresolved.md
 !examples/**/*.md

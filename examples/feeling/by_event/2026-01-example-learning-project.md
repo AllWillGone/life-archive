@@ -1,7 +1,7 @@
 ﻿# 2026-01-示例学习计划情绪记录
 
-linked_fact: `../../fact/events/2026-01-example-learning-project.md`
-最近更新：2026-06-06
+linked_fact: [2026-01-示例学习计划](../../fact/events/2026-01-example-learning-project.md)
+最近更新：2026-07-15
 
 ## 情绪轨迹
 

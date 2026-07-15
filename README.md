@@ -1,132 +1,114 @@
-﻿# LifeArchive
+# LifeArchive
 
 English | [简体中文](README.zh-CN.md)
 
-A Mnemosyne-inspired autobiographical memory system for AI-assisted reflection.
+An autobiographical memory system for long-term, AI-assisted reflection.
 
-LifeArchive is a public template for building a private, long-term memory archive with an AI assistant. It is designed to record lived events, relationships, emotional changes, unresolved fragments, and post-conversation update summaries while keeping facts, feelings, and assistant suggestions clearly separated.
+LifeArchive is a public template for maintaining a private archive of lived events, relationships, emotional changes, and unresolved context. It keeps observable events, the user's feelings and interpretations, navigation summaries, and post-conversation updates in separate layers so that an AI assistant can restore context without flattening a life into one profile.
 
-This repository contains only rules, folder structure, templates, and sanitized examples. It should not contain real personal memories. For actual use, copy this template into a private repository. For public sharing, publish only the template or a thoroughly cleaned copy.
+This repository contains rules, empty structure, templates, synthetic examples, and sanitized research notes only. It must not contain a real person's memory archive or the Git history of one.
 
-## Why This Exists
+## Core Model
 
-Most AI memory systems either flatten personal history into short summaries or mix facts, emotions, advice, and guesses into one pile. LifeArchive takes a slower autobiographical approach:
-
-- `fact/` records what happened.
+- `fact/` records what happened, preserving source and uncertainty.
 - `feeling/` records how the user felt, understood, reacted, and changed over time.
-- `summary/` keeps compressed overviews, current state, timelines, people, and topics.
-- `session/` stores post-conversation memory update summaries, not full chat logs. Ordinary advice, action reminders, comfort, and in-the-moment analysis are kept here briefly by default, not as a separate long-term knowledge base.
-- `inbox/` holds fragments that cannot yet be safely filed.
-- `archive/` keeps old formats, deprecated content, or migration backups.
+- `summary/`, indexes, and `people/` are lightweight routing layers, not duplicate source records.
+- `session/` records memory updates from a conversation, not the full chat.
+- `inbox/` is a last-resort holding area for material that cannot yet be filed safely.
+- `experiments/` contains system research and is outside autobiographical memory.
 
-The guiding principle is simple: preserve the user's underlying memory without rewriting it into something cleaner, safer, or less true.
+The underlying rule is simple: preserve the user's memory without rewriting it into something cleaner, safer-sounding, or more certain than the source supports.
 
 ## Repository Layout
 
 ```text
 LifeArchive/
-  AGENTS.md                 # Agent rules for maintaining the memory system
-  README.md                 # English project introduction
-  README.zh-CN.md           # Simplified Chinese project introduction
+  AGENTS.md                 # Authoritative maintenance rules
+  README.md                 # English project guide
+  README.zh-CN.md           # Simplified Chinese project guide
+  CHANGELOG.md              # Public template releases
   docs/
-    templates/              # Blank file templates
+    templates/              # Blank memory-file templates
     public-template-safety.md
-  examples/                 # Sanitized examples
+    public-template-safety.zh-CN.md
+  examples/                 # Synthetic examples only
+  experiments/              # System-design observations and experiments
   summary/                  # Overview, current state, timeline, people, topics
+  people/                   # Optional person routing cards
   fact/
     index.md
     events/                 # Event-based factual records
   feeling/
     index.md
     by_event/               # Event-linked emotional records
-  session/                  # Post-conversation update summaries
+  session/                  # Post-conversation memory-update summaries
   inbox/                    # Unresolved fragments
-  archive/                  # Old or migrated material
+  archive/                  # Legacy formats and migration backups only
 ```
 
-## How To Use
+Normal conversations start from current state and indexes, then open only the relevant underlying files. They do not load every event, person card, or experiment by default. See `AGENTS.md` for the complete read and write rules.
 
-1. Copy this repository into a private location.
-2. Ask your AI assistant to read `AGENTS.md` before maintaining the archive.
-3. Start from `summary/overview.md`, `summary/current.md`, and `summary/timeline.md` when restoring context.
-4. File new information by event, not by chat date.
-5. Keep facts, feelings, session summaries, and unresolved fragments in their own places.
-6. Never publish a filled private archive without removing personal data and Git history.
+## Start Safely
+
+Do not fill in a clone or fork that still points to this public repository. A filled archive can expose names, filenames, locations, relationships, emotional records, and old versions in Git history.
+
+1. Download an archive or copy the tracked template files, not the public `.git/` directory, into a new private directory or private repository. If you use Git, verify repository visibility and run `git remote -v` before writing personal material.
+2. Give the AI assistant read and write access only to that private directory, and ask it to read the root `AGENTS.md`.
+3. Decide whether personal memory should be versioned. The included `.gitignore` ignores some newly created low-level records as defense in depth; remove or adapt those rules only inside a repository you have verified is private.
+4. Review important writes and maintain an encrypted backup appropriate to the sensitivity of the archive.
+
+`.gitignore` is not a privacy boundary. Files already tracked by Git, including the starter summaries and indexes, can still be committed after they are filled. A private repository is also not encryption. Review [the public-template safety notes](docs/public-template-safety.md) before first use or publication.
 
 ## Starter Prompt
 
-Use this when starting a new conversation. Replace `<your LifeArchive path>` with the actual path.
-
-Best for: ordinary conversations where the assistant should understand the archive, respond naturally, and quietly maintain memory.
-
-Not for: large cleanup, splitting or merging events, or broad summary compression.
+Use this for an ordinary conversation. It deliberately refers to `AGENTS.md` instead of duplicating rules that may change.
 
 ```text
-Please read <your LifeArchive path>\AGENTS.md first, then talk with me naturally while prioritizing the current conversation. Memory maintenance should not take over the conversation: when new facts, emotional changes, relationship clues, or event clues appear, quietly update the memory files under <your LifeArchive path> during this turn according to the rules. File information into the matching event when possible; if it cannot be safely filed yet, put it in inbox. Advice, action reminders, comfort, or supportive analysis from the assistant should not be written into fact, feeling, or summary by default, and should not create a separate long-term index. Keep ordinary advice briefly in the day's session summary. Only when a suggestion has become something I clearly accept, repeat, adopt, or express as "I want / I need / I hope" should it be written as my own need, wish, decision, or current understanding in feeling or necessary summary/current. Do not routinely end replies by saying "recorded" or "updated" unless I explicitly ask, the update involves an important structural change, or the task itself is memory organization. If you do mention updates, first verify that the file write actually succeeded. Do not claim a file was updated based only on intention or memory.
+Read AGENTS.md at the root of the current repository. Follow its startup-context and read-on-demand/before-writing rules; do not read every underlying memory file by default.
+
+Then talk with me naturally, prioritizing analysis and response over record keeping. When new facts, emotional changes, relationship clues, or event clues appear, quietly maintain the memory files in this repository according to AGENTS.md.
 ```
 
 ## Periodic Cleanup Prompt
 
-Use this occasionally when indexes, summaries, or event boundaries start to drift.
-
-Best for: checking the whole archive for stale indexes, overly small events, duplicate records, unclear filing boundaries, broken links, and sorting issues.
-
-Not for: ordinary conversation, or when you only want to lightly compress `summary/`.
+Use this when indexes, summaries, event boundaries, or unresolved material have started to drift. It asks for an audit before any restructuring.
 
 ```text
-Please read <your LifeArchive path>\AGENTS.md and audit my autobiographical memory system. This is a periodic cleanup task, not ordinary chat, but still follow the rules for conversation priority, truthfulness, write confirmation, underlying memory protection, and fact/feeling separation. Existing content in fact/ and feeling/ is my underlying memory; I usually will not fully restate it. Do not delete, weaken, replace, polish away, or rewrite existing facts, details, emotions, or original wording merely for compression or style. In principle, only adjust chronology, move original text, add links, add date labels, and add minimal connective wording. When unsure whether something may be deleted or rewritten, keep it and ask me.
+Read AGENTS.md at the root of the current repository. This is a periodic cleanup, not an ordinary conversation. Follow its truthfulness, underlying-memory protection, privacy, and write-confirmation rules throughout.
 
-Audit only first; do not write files yet. Follow the recommended reading order: summary/overview.md, summary/current.md, summary/timeline.md, fact/index.md, relevant fact/events/, feeling/index.md, relevant feeling/by_event/, summary/people.md, summary/topics.md, inbox/unresolved.md, and recent session files.
+Audit first; do not write yet. Start from summary and the two indexes, then read only the person cards, underlying events, inbox items, and recent session summaries needed to verify a finding.
 
-Check for:
-1. Whether fact and feeling are mixed.
-2. Whether fact/events are organized by complete events, relationship stages, or life stages. Check newly created fact files especially: only keep a separate fact when it has an independent subject, phase, ongoing development, long-term meaning, or truly cannot fit an existing event. Prefer merging ordinary small incidents, one-off chats, short-term emotional shifts, and additions to existing events into an existing fact, the day's session summary, or inbox.
-3. Whether indexes, timelines, and internal event timelines are sorted correctly.
-4. Whether "recently updated" fields are stale.
-5. Whether summary/current.md is too long, too detailed, or acting like an event collection.
-6. Whether overview, people, and topics need link fixes, deduplication, or compression.
-7. Whether inbox fragments can now be filed.
-8. Whether advice, action reminders, comfort, or supportive analysis from the assistant has been incorrectly left in fact, feeling, or summary. Only keep such material in feeling or summary/current when it has become my accepted, repeated, adopted, or explicitly stated need, wish, decision, or current understanding.
-9. Whether session files summarize memory updates without storing full chat logs.
-10. Whether links, filenames, date precision, real names, uncertainty labels, and UTF-8 handling are consistent.
+Check:
+1. Whether fact, feeling, and assistant-generated material follow their filing boundaries, without duplicating complete events.
+2. Whether event, relationship-stage, and cross-event theme boundaries are coherent, duplicated, or too fragmented. Do not split a continuous stage merely because its file is long.
+3. Whether both indexes, the summary timeline, and event timelines follow the sorting rules, and whether "recently updated" fields are stale.
+4. Whether current, overview, person cards, and topic indexes remain routing layers rather than duplicate or unique source records.
+5. Whether inbox and session files still follow their responsibilities.
+6. Whether links, plain-text paths, filenames, date precision, and UTF-8 handling are consistent. Prefer stable paths after creation; propose renames only for clearly wrong, duplicate, or hard-to-find names, and update every reference after approval.
 
-First output a short cleanup proposal: list the files you recommend changing, how each type of issue should be handled, and whether any split, merge, deletion, or archive decision needs my confirmation. Wait for my approval before writing files. After writing, report only the files that were actually updated successfully; if any write failed or is uncertain, say so clearly.
+First list the files you recommend changing, the proposed treatment, and any split, merge, deletion, or archive decision that needs my confirmation. Wait for approval before writing. Afterwards, report only writes that actually succeeded and identify any failure or uncertainty.
 ```
 
 ## Summary Slimming Prompt
 
-Use this when `summary/` has become too long, too detailed, or too influential on future conversations.
-
-Best for: making summary files lighter navigation entry points.
-
-Not for: splitting or merging underlying events, or rewriting original `fact/` and `feeling/` records.
+Use this when `summary/` has become too long or detailed. It does not authorize rewriting the underlying `fact/` and `feeling/` records.
 
 ```text
-Please read <your LifeArchive path>\AGENTS.md and audit my memory system. This task is summary slimming, not full periodic cleanup and not ordinary chat.
+Read AGENTS.md at the root of the current repository. This task is summary slimming, not a full periodic cleanup and not an ordinary conversation.
 
-Goal: make the summary files lighter and more useful as navigation entry points, without turning them into duplicate underlying records. Protect the underlying memory in fact/ and feeling/: do not rewrite, delete, compress, or replace original factual or emotional records. Unless you find obvious broken links, stale links, or incorrect summary references, do not modify fact/ or feeling/.
+Inspect only the summary layer by default. Keep current, timeline, people, and topics as concise routing files; remove settled state, duplicated event narratives, repeated descriptions, and assistant-generated material that does not belong there. Do not modify fact or feeling unless a broken reference must be corrected.
 
-Focus on:
-1. summary/current.md: keep only active relationships, current concerns, current goals, emotional through-lines, and follow-ups that still affect the present. Compress or remove details already settled into fact/events, feeling/by_event, or summary/timeline.md.
-2. summary/timeline.md: keep it as a summary timeline. Each entry should usually be one core fact plus relevant links, not a full event narrative or emotional analysis.
-3. summary/people.md: record each person's relationship to me, the currently important relationship state, and related event links. Do not turn it into another person's biography or repeat full fact files.
-4. summary/topics.md: keep topic entry points and related event links. Do not make it a new long thematic essay.
-5. If summary contains advice, action plans, comfort, or in-the-moment analysis from the assistant, remove it unless it has clearly become my own thought, need, decision, or current state.
-6. If a summary detail still has long-term value but does not belong in summary, first confirm it already exists in the relevant fact/feeling/session file. If it does not, propose a migration before deleting it.
-
-Principles:
-- Slim only the summary layer by default.
-- Preserve entry points, not full details.
-- Prefer compression, merging, and removing duplicate summary text without changing factual meaning.
-- If unsure whether something can be removed, keep it and mark it as needing confirmation, or ask me first.
-- Before writing, give me a short plan listing which summary files you want to change, how you will slim each one, and whether anything needs my confirmation. Wait for approval before writing.
-- After writing, check links, headings, update dates, and obvious duplication. Then report only the files actually updated successfully.
+If something exists only in summary, propose a migration or preservation plan before removing it. List the files and treatment first, wait for my approval, then write and check links. Report only changes that actually succeeded.
 ```
 
-## Privacy Warning
+## Experiments
 
-A filled LifeArchive can contain real names, locations, relationships, emotional records, conversation summaries, unresolved fragments, and older private versions in Git history. Treat it as highly private. This public repository is a template; a real archive should normally stay private.
+The [experiments index](experiments/README.md) separates technical research from autobiographical memory. Public experiment material must use synthetic or thoroughly sanitized fixtures and state its method, measurement limits, model-label source, and evidence level. An observation with missing controls remains an observation, not a benchmark.
+
+## Limitations
+
+LifeArchive is a plain-text organizational method, not encryption, access control, automatic backup, a clinical record, or a substitute for professional care. AI assistants can omit, misclassify, or over-interpret information; important records require human review.
 
 ## License
 
-MIT License. See [LICENSE](LICENSE).
+The template files in this repository are available under the [MIT License](LICENSE). The license does not require publication of personal records added to a private copy.

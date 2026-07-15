@@ -2,6 +2,34 @@
 
 This changelog tracks changes to LifeArchive's public rules, prompts, directory responsibilities, and blank-template behavior.
 
+## [2.0.0] - 2026-07-15
+
+### Added
+
+- Added startup context routing based on current state, indexes, optional person cards, and on-demand reads instead of loading all underlying memory.
+- Added `people/` as an optional routing-card layer and a reusable person-card template.
+- Added `experiments/` as a research layer outside autobiographical memory, with bilingual publication standards, evidence levels, an experiment template, and the first sanitized exploratory observation.
+- Added instruction/data separation so quoted chats, webpages, model output, and content stored in memory files cannot silently become maintenance instructions.
+- Added bilingual public-template safety guidance covering tracked-file risk, Git history, commit metadata, re-identification, credentials, and experiment publication.
+
+### Changed
+
+- Aligned the public rules with the private system's design iterations through 2.5.0 while retaining safer public-template privacy defaults and self-contained file templates.
+- Strengthened conversation priority for long memories, emotional disclosure, self-analysis, relationship uncertainty, and distress without imposing a rigid response length.
+- Made `AGENTS.md` the single source of maintenance behavior and replaced duplicated, platform-specific README prompts with shorter references to it.
+- Tightened the assistant-content boundary: assistant advice and analysis may be summarized briefly in an already warranted `session/` update or when the user asks to retain them, but only later user-expressed wishes, decisions, actions, or results can enter underlying memory.
+- Clarified source handling for observations, user interpretations, user uncertainty, and third-party reports; agent inference cannot be stored as user memory.
+- Reworked event granularity around "related does not mean belonging," while preserving links between independent events and cross-event themes.
+- Made summaries, indexes, and person cards conditional routing layers that cannot hold the only copy of underlying information or define a complete personality.
+- Reduced `inbox/` to a last-resort human-review buffer, added stable-path guidance, and aligned index and timeline ordering rules.
+- Expanded both root READMEs into matching public guides with safer private-repository setup, explicit limitations, and experiment navigation.
+- Kept the old `support/` placeholder only for compatibility with existing clones; it is absent from the default layout and normal context flow.
+
+### Security
+
+- Documented that `.gitignore` does not protect tracked summary and index files, erase history, or provide encryption.
+- Prohibited storing authentication secrets and added an allowlist-based boundary between public template material and private memory.
+
 ## [1.1.0] - 2026-06-19
 
 ### Added
