@@ -1,4 +1,4 @@
-﻿# Ignore private or local material by default.
+# Ignore private or local material by default.
 
 # Operating system files
 .DS_Store
@@ -42,3 +42,15 @@ support/by_event/**
 !fact/index.md
 !feeling/index.md
 !examples/**/*.md
+
+# Private resumable audit state. Keep this outside the public template history.
+maintenance/baseline.json
+maintenance/baseline.json.previous
+maintenance/proposal.json
+maintenance/proposal.json.previous
+maintenance/proposal.md
+maintenance/proposal.md.previous
+maintenance/proposals/
+maintenance/run/
+maintenance/.system/audit.lock
+maintenance/.system/recovery/

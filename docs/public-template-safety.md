@@ -4,6 +4,12 @@ English | [简体中文](public-template-safety.zh-CN.md)
 
 LifeArchive is safe to publish only when it contains rules, empty structure, synthetic or thoroughly sanitized examples, and reviewed research material. A working autobiographical archive should normally remain private.
 
+## Audit State
+
+The reusable maintenance-5 engine lives under `maintenance/.system/`, but every generated baseline, run, machine proposal, Markdown proposal, proposal archive, migration backup, lock, and recovery file is private working state. Initialize a baseline only in a private copy with `node maintenance/.system/audit.mjs init`; never copy state from another archive or publish it with the template.
+
+The public allowlist may include reusable source, rules, isolated tests, and documentation under `maintenance/`. It must exclude `baseline.json`, `run/`, `proposal.json`, `proposal.md`, `proposals/`, `*.previous`, `.system/audit.lock`, and `.system/recovery/`. Inspect staged files even when `.gitignore` contains these patterns.
+
 ## Before First Use
 
 - Create a new private directory or private repository. Do not fill a clone or fork that still points to the public template remote.

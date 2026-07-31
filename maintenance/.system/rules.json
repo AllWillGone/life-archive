@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "protocol": "maintenance-5",
+  "policy_version": "memory-semantics-2.7",
+  "executor_version": 5,
+  "system_files": [
+    "AGENTS.md",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "memory_roots": [
+    { "path": "fact", "role": "fact" },
+    { "path": "feeling", "role": "feeling" },
+    { "path": "people", "role": "people" },
+    { "path": "session", "role": "session" },
+    { "path": "summary", "role": "summary" },
+    { "path": "inbox", "role": "inbox" }
+  ],
+  "allowed_write_roots": [
+    "fact",
+    "feeling",
+    "people",
+    "session",
+    "summary",
+    "inbox"
+  ],
+  "allowed_write_files": [
+    "AGENTS.md",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "excluded_names": [
+    ".gitkeep"
+  ],
+  "derived_paths": [
+    "fact/index.md",
+    "feeling/index.md",
+    "summary/current.md",
+    "summary/overview.md",
+    "summary/people.md",
+    "summary/timeline.md",
+    "summary/topics.md"
+  ]
+}

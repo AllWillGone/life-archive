@@ -6,7 +6,7 @@
 
 LifeArchive 是用于维护私人记忆库的公开模板，可以长期记录经历、关系、情绪变化和未解决线索。它把可观察事件、使用者的感受与理解、导航摘要和对话后的更新分层保存，让 AI assistant 能按需恢复上下文，而不是把一生压缩成单一人物画像。
 
-本仓库只包含规则、空结构、模板、合成示例和经过清理的研究记录，不得包含任何人的真实记忆库或其 Git 历史。
+本仓库只包含可复用的规则与审计工具、空结构、模板、合成示例和经过清理的研究记录，不得包含任何人的真实记忆库或其 Git 历史。
 
 ## 核心模型
 
@@ -33,6 +33,7 @@ LifeArchive/
     public-template-safety.zh-CN.md
   examples/                 # 只放合成示例
   experiments/              # 系统设计观察与实验
+  maintenance/              # 通用审计协议；生成状态保持私有
   summary/                  # 总览、当前状态、时间线、人物、主题
   people/                   # 可选人物路由卡片
   fact/
@@ -59,6 +60,20 @@ LifeArchive/
 
 `.gitignore` 不是隐私边界。已经被 Git 跟踪的初始摘要和索引在填入内容后仍可被提交；私有仓库本身也不等于加密。首次使用或公开发布前，请阅读[公开模板安全说明](docs/public-template-safety.zh-CN.md)。
 
+## 周期审计
+
+公开模板包含通用 maintenance-5 审计引擎，供复制到私有仓库后使用。它采用“轻量审计、严格执行”模式：可以审计一篇、多篇、全部已变化文档或完整配置范围；只显示带有精确修改前后的真实建议，不铺开每份已审计文档；每项修改始终由使用者决定。
+
+新建私有副本后先初始化一次本地基线：
+
+```text
+node maintenance/.system/audit.mjs init
+```
+
+然后使用下面的周期整理提示词。命令拒绝替换已有状态。请把 `maintenance/baseline.json`、`maintenance/run/`、`maintenance/proposal.json`、`maintenance/proposal.md`、`maintenance/proposals/`、迁移备份、锁和恢复材料保持私有，不要提交到公开仓库。
+
+范围选择、精确审阅、自定义提议、授权和恢复流程见 [`maintenance/README.zh-CN.md`](maintenance/README.zh-CN.md)。
+
 ## 新对话启动提示词
 
 适合普通对话。提示词只引用 `AGENTS.md`，避免复制一份会随版本漂移的规则正文。
@@ -76,7 +91,13 @@ LifeArchive/
 ```text
 请先读取当前仓库根目录的 AGENTS.md。这次任务是周期整理，不是普通聊天；全程遵守其中的真实性、底层记忆保护、隐私和写入确认规则。
 
-先只审计，不要写入。先从 summary 和两个 index 建立入口，再按发现的问题读取必要的人物卡片、底层事件、inbox 和最近的 session。
+先只审计，不要修改记忆文档。如果这个私人副本还没有 `maintenance/baseline.json`，先运行一次 `node maintenance/.system/audit.mjs init`。然后运行 `node maintenance/.system/audit.mjs status` 和 `node maintenance/.system/audit.mjs validate`。有未完成 run 时按其中记录的 `next_action` 恢复；否则选择一种范围：
+
+- 指定文档：重复使用 `--path`，或使用 `--paths-file`；需要预览依赖时先运行 `scope`；
+- 已变化文档：不带 mode 运行 `start`；
+- 全部文档：只有我明确要求或语义规则确有需要时才运行 `start --mode full`。
+
+只读取每个目标及系统列出的必要只读依赖。不要把依赖自动变成写入目标，也不要把局部审计冒充全仓审计完成。
 
 重点检查并提出方案：
 1. fact、feeling 和 agent 内容是否符合 AGENTS.md 的归档边界，是否存在完整事件重复复述。
@@ -86,7 +107,9 @@ LifeArchive/
 5. inbox 和 session 是否仍符合各自职责。
 6. 链接、纯文本路径、文件名、日期精度和 UTF-8 是否一致。文件创建后优先保持路径稳定；只有文件名明显错误、重复或不利检索时才提出重命名方案，并在确认后同步所有引用。
 
-先列出建议修改的文件、处理办法和需要我确认的拆分、合并、删除或归档决定，等我确认后再写入。完成后只按实际写入结果说明修改文件；任何失败或不确定都要明确指出。
+用 `checkpoint` 保存已完成或部分完成的单元，再发布经过核对的提议草稿。默认人类视图必须先显示操作索引，再只展开真正的建议；每项显示精确的修改前、修改后和少量上下文，不要铺开所有已审计文档全文。
+
+允许我通过 `revise` 新增、删除、替换操作或更换目标。只有我明确给出提议编号、版本和操作编号后，才能执行 `decision` 或 `apply`。只有 `apply` 可以修改记忆文档；如果目标、必要依赖或语义策略发生漂移，必须在任何写入前停止整批操作。完成后只汇报实际成功的写入，任何失败或不确定都要明确指出。准确命令和 JSON 格式见 `maintenance/README.zh-CN.md`。
 ```
 
 ## 阶段性摘要瘦身提示词

@@ -2,6 +2,44 @@
 
 This changelog tracks changes to LifeArchive's public rules, prompts, directory responsibilities, and blank-template behavior.
 
+## [3.4.0] - 2026-07-31
+
+### Changed
+
+- Upgraded the reusable periodic audit to maintenance-5's light-audit, strict-apply model.
+- Replaced whole-workspace review as the practical default with per-document review state and explicit selected, changed, and full scopes.
+- Added `scope` previews that identify targets, read-only dependencies, dependency reasons, and the target served by each dependency.
+
+### Proposal workflow
+
+- Changed the default human view to index every operation but expand only real suggestions, with exact before/after text and limited context instead of dumping every audited document.
+- Added `show` filters for operation ID, path, pending state, all operations, and expanded detail.
+- Added `revise` support for adding, removing, or replacing operations, including changes to target paths and operation types.
+
+### Simplified
+
+- Removed user-facing requirements for evaluator-source hashes, presentation hashes, checkpoint hash chains, transaction generations, and manual EOF proofs.
+- Retained only internal document-drift, operation-authorization, and semantic-policy checks that directly protect behavior.
+
+### Safety and public boundary
+
+- Kept `apply` strict: all approved targets and required dependencies are preflighted together, and any conflict stops the batch before the first target write.
+- Added public-template `init` support and isolated tests for creating a private maintenance-5 baseline exactly once.
+- The public repository contains only reusable audit source, rules, tests, and documentation. Baselines, runs, proposals, archives, recovery material, personal memory, and private Git history remain excluded.
+
+## [3.3.0] - 2026-07-25
+
+### Added
+
+- Added a generic, resumable maintenance-4 audit engine, rules bundle, and isolated Node.js tests for private copies of the public template.
+- Added a first-use `node maintenance/.system/audit.mjs init` command that creates a local baseline without replacing existing state.
+- Added repository-relative validation for checkpoint and proposal draft inputs.
+- Added repository-relative validation for decision input paths before authorization is read.
+
+### Privacy boundary
+
+- The public repository contains only reusable audit code, rules, tests, and documentation. It does not contain any real memory, private baseline, run state, proposal, legacy archive, or private repository history.
+
 ## [2.0.0] - 2026-07-15
 
 ### Added

@@ -4,6 +4,12 @@
 
 只有当 LifeArchive 仅包含规则、空结构、合成或彻底脱敏的示例，以及经过审阅的研究材料时，才适合公开。实际使用中的自传式记忆库通常应保持私有。
 
+## 审计状态
+
+通用 maintenance-5 引擎位于 `maintenance/.system/`，但生成的基线、运行、机器提议、Markdown 提议、提议归档、迁移备份、锁和恢复文件全部属于私有工作状态。只应在私人副本中用 `node maintenance/.system/audit.mjs init` 初始化基线；不要从其他记忆库复制状态，也不要随模板公开发布。
+
+公开允许列表可以包含 `maintenance/` 下的通用源码、规则、隔离测试和文档，但必须排除 `baseline.json`、`run/`、`proposal.json`、`proposal.md`、`proposals/`、`*.previous`、`.system/audit.lock` 和 `.system/recovery/`。即使 `.gitignore` 已包含这些模式，也必须检查暂存区。
+
 ## 首次使用前
 
 - 建立新的私人目录或私有仓库，不要在仍连接公开模板远端的 clone 或 fork 中填写记忆。
