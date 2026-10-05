@@ -51,6 +51,7 @@ maintenance/proposal.json.previous
 maintenance/proposal.md
 maintenance/proposal.md.previous
 maintenance/proposals/
+maintenance/reviews/
 maintenance/run/
 maintenance/.system/audit.lock
 maintenance/.system/recovery/

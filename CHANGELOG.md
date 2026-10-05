@@ -2,6 +2,34 @@
 
 This changelog tracks changes to LifeArchive's public rules, prompts, directory responsibilities, and blank-template behavior.
 
+The 4.0.0 and 4.0.1 entries identify the source-rule release dates. Both were synchronized into this public template on 2026-10-05; older public release entries remain unchanged.
+
+## [4.0.1] - 2026-09-17
+
+### Changed
+
+- Changed new `session/` records from memory-update summaries to the user's complete messages from ordinary autobiographical conversations, preserving wording, paragraphs, message boundaries, and order.
+- Append messages even when they add no new facts; exclude project maintenance and conversations the user explicitly says not to record.
+- Keep assistant replies, advice, analysis, tool output, update summaries, and file lists out of new session records. Existing session summaries remain unchanged and are not relabeled as user quotations.
+- Keep raw-message preservation separate from event filing and underlying-memory protection; consult sessions on demand when checking wording, omissions, or interpretation.
+- Aligned both project guides and starter prompts, and removed the obsolete support extension's permission to summarize assistant content in sessions.
+- Aligned the current-state slimming prompts with a read-only review of `summary/current.md`, separate approval for necessary source migration, and verification after approved edits.
+
+### Public-template boundary
+
+- Retained instruction/data separation, credential exclusion, configurable personal-data handling, template references, and the public engine's first-use `init` support.
+- Ignore generated `maintenance/reviews/` reports and receipts alongside private audit state. No personal records, private audit state, or private Git history are included in this synchronization.
+
+## [4.0.0] - 2026-09-12
+
+### Changed
+
+- Made ordinary conversation the first priority: respond to the user's central concern before maintaining records, without turning the exchange into an archive report.
+- Prioritize the last explicit question or the central tension when several topics appear together, rather than automatically splitting them into a task list.
+- Removed suggested response lengths, fixed paragraph counts, default closing templates, and routine narration of reads and writes.
+- Kept record-layer distinctions inside memory files while allowing natural language in conversation; preservation, event boundaries, and read-on-demand behavior continue to apply.
+- Added an explicit system-experiment prompt while keeping technical research outside autobiographical memory and public research based on synthetic or thoroughly sanitized material.
+
 ## [3.4.0] - 2026-07-31
 
 ### Changed
