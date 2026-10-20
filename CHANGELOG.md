@@ -2,7 +2,34 @@
 
 This changelog tracks changes to LifeArchive's public rules, prompts, directory responsibilities, and blank-template behavior.
 
-The 4.0.0 and 4.0.1 entries identify the source-rule release dates. Both were synchronized into this public template on 2026-10-05; older public release entries remain unchanged.
+Release entries use their source-rule dates. Versions 4.0.0 and 4.0.1 were synchronized on 2026-10-05; versions 4.1.0 and 4.2.0 were synchronized on 2026-10-20. Older public release entries remain unchanged.
+
+## [4.2.0] - 2026-10-20
+
+### Changed
+
+- Allow new factual entries to be distilled and reorganized from user narration while preserving concrete events, key details, necessary original wording, and uncertainty. Existing underlying records remain protected from rewriting.
+- Generalize preservation guidance for sensitive content while retaining the public template's explicit privacy preferences, anonymization choices, and credential exclusion.
+- Consolidate source attribution, uncertainty, and unresolved-item rules. Do not repeat disclaimers after a source is clear or turn ordinary unmentioned details into missing-field tasks.
+- Put split and merge assessment in the periodic-audit prompts. Proposals preserve all memory passages verbatim and identify destinations, fact/feeling correspondence, index and link changes, and rollback before explicit approval.
+- Consolidate repeated authorization paragraphs in both current-state slimming prompts, retaining their selection criteria, source-preservation checks, and post-edit verification.
+- Align the reusable fact and feeling templates with the revised rules.
+
+### Scope
+
+- Keep startup context routing, feeling-recording behavior, directory structure, and the maintenance-5 implementation unchanged. This synchronization includes the 4.1.0 rule and documentation changes below.
+- Publish only reusable rules, prompts, templates, and release documentation; no personal records, private review observations, audit state, or private Git history are included.
+
+## [4.1.0] - 2026-10-15
+
+### Changed
+
+- Remove proactive cleanup-trigger lists from ordinary conversation rules and keep post-write checks limited to the current changes.
+- Keep technical-workflow boundaries in their dedicated entry points and remove repeated technical-content exclusions from daily memory instructions.
+- Permit dated additions within the same event or relationship stage. Changes of scene or links to several earlier events do not by themselves require a new file; independently meaningful experiences can still have their own entries.
+- Limit unresolved items and inbox filing to significant uncertainty or material worth retaining.
+- Clarify that strictly read-only maintenance can use existing files, `status`, `validate`, and `scope`, while `show` may write the proposal view. Document that complete `AGENTS.md` bytes affect the policy fingerprint.
+- Clarify that approved current-state slimming verifies every link in current and links affected by approved cross-file changes.
 
 ## [4.0.1] - 2026-09-17
 

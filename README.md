@@ -2,7 +2,7 @@
 
 English | [简体中文](README.zh-CN.md)
 
-An autobiographical memory system for long-term, AI-assisted reflection.
+An autobiographical memory system for long-term, AI-assisted reflection. Current rule release: **4.2.0**.
 
 LifeArchive is a public template for maintaining a private archive of lived events, relationships, emotional changes, and unresolved context. It keeps observable events, the user's feelings and interpretations, navigation summaries, and verbatim user messages in separate layers so that an AI assistant can restore context without flattening a life into one profile.
 
@@ -91,25 +91,25 @@ Then talk with me naturally, prioritizing analysis and response over record keep
 Use this when indexes, summaries, event boundaries, or unresolved material have started to drift. It asks for an audit before any restructuring.
 
 ```text
-Read AGENTS.md at the root of the current repository. This is a periodic cleanup, not an ordinary conversation. Follow its truthfulness, underlying-memory protection, privacy, and write-confirmation rules throughout.
+Read the root AGENTS.md and maintenance/README.md in full. This is a periodic cleanup; follow their content-protection, audit, recovery, and authorization rules.
 
-Audit first; do not modify memory documents. If this private copy has no `maintenance/baseline.json`, run `node maintenance/.system/audit.mjs init` once. Then run `node maintenance/.system/audit.mjs status` and `node maintenance/.system/audit.mjs validate`. Resume an unfinished run from its recorded `next_action`; otherwise use one of these scopes:
+Audit first; do not modify memory documents. If this private copy has no `maintenance/baseline.json`, run `node maintenance/.system/audit.mjs init` once. Then run `node maintenance/.system/audit.mjs status` and `node maintenance/.system/audit.mjs validate`. For an unfinished run, read `maintenance/run/state.json` in full and resume from its actual status and `next_action`. At a decision or apply stage, read the current proposal; do not reuse historical approval. Follow the protocol for re-review with `refresh`. With no run, default to changed documents, or explicitly select another scope:
 
 - selected: repeat `--path`, or use `--paths-file`, with `scope` first when dependency preview is useful;
 - changed: run `start` without a mode;
-- all: run `start --mode full` only when explicitly requested or semantically necessary.
+- all: run `start --mode full` only when explicitly requested; a policy change does not itself authorize expanding scope.
 
-Read only each selected target and the required read-only dependencies reported for it. Do not treat dependencies as automatic write targets or a selected audit as a full-workspace completion.
+Read each selected target and its listed required read-only dependencies in full. Do not treat dependencies as automatic write targets or a selected audit as a full-workspace completion.
 
 Check:
 1. Whether fact, feeling, and assistant-generated material follow their filing boundaries, without duplicating complete events.
-2. Whether event, relationship-stage, and cross-event theme boundaries are coherent, duplicated, or too fragmented. Do not split a continuous stage merely because its file is long.
+2. Within this review scope, whether to split independent events or stages, or merge fragments of the same event. Do not split by length alone. Preserve every memory passage verbatim and explain its destination, fact/feeling correspondence, index and link changes, and rollback.
 3. Whether both indexes, the summary timeline, and event timelines follow the sorting rules, and whether "recently updated" fields are stale.
 4. Whether current, overview, person cards, and topic indexes remain routing layers rather than duplicate or unique source records.
 5. Whether inbox and session files still follow their responsibilities.
 6. Whether links, plain-text paths, filenames, date precision, and UTF-8 handling are consistent. Prefer stable paths after creation; propose renames only for clearly wrong, duplicate, or hard-to-find names, and update every reference after approval.
 
-Save completed or partial units with `checkpoint`, then publish a reviewed proposal draft. The default human view must show the operation index and expand only actual suggestions, with precise before/after text and limited context. Do not show every audited document in full.
+During the audit, write only under maintenance/. Save completed or partial units with `checkpoint`; generate the formal proposal with `publish --file <proposal-draft.json>` instead of writing it by hand. The default human view must show the operation index and expand only actual suggestions, with precise before/after text and limited context. Do not show every audited document in full.
 
 Let me customize the proposal through `revise`, including adding, removing, replacing, or retargeting operations. Wait for an explicit proposal ID, version, and operation-ID decision before `decision` or `apply`. Only `apply` may modify memory documents, and it must stop the full approved batch before any write if a target, required dependency, or semantic policy has drifted. Afterwards, report only writes that actually succeeded and identify any failure or uncertainty. See `maintenance/README.md` for exact command and JSON formats.
 ```
@@ -121,9 +121,7 @@ Use this when `summary/current.md` has become a lengthy recent-history log that 
 ```text
 Read AGENTS.md at the root of the current repository in full. This task is slimming summary/current.md, not a full periodic cleanup and not an ordinary conversation.
 
-This prompt authorizes a read-only audit only. Do not create, modify, move, rename, delete, or format any file, including update dates, indexes, links, AGENTS.md, README.md, or CHANGELOG.md. Even obvious, mechanical, or low-risk edits must first appear in the proposed plan.
-
-Recommend a plan and explain it, but leave decisions to me. List every proposed compression, removal, migration, and link change with its destination, risk, and expected result.
+This review is read-only: do not create, modify, move, rename, delete, or format any file. Submit only a summary/current.md slimming proposal, specifying each operation, where its information is preserved, its risk, and its expected result, then stop. Later, execute only the numbered batches, files, and operations I explicitly approve; do not include unapproved changes.
 
 The main goal is to restore current as a snapshot of current state rather than a log of recent events and analysis, reducing startup context without imposing a fixed length or reduction percentage that loses information.
 
@@ -158,9 +156,7 @@ Report:
 6. Expected character and entry counts and the reduction percentage.
 7. Decisions I need to make.
 
-Stop after reporting the audit. This prompt itself authorizes no writes. Execute only numbered batches, files, and operations I explicitly approve later; do not include unapproved, ambiguous, or newly discovered changes.
-
-After approval, implement only approved actions. Report current's before/after character, line, and entry counts, check every link, and verify that unapproved fact, feeling, session, person cards, and other summaries are unchanged. State any failure or uncertainty explicitly.
+After approval, implement only approved actions. Report current's before/after character, line, and entry counts, check all links in current and links affected by approved cross-file changes, and verify that unapproved fact, feeling, session, person cards, and other summaries are unchanged. State any failure or uncertainty explicitly.
 ```
 
 ## Experiments

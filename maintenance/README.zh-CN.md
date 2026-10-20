@@ -42,7 +42,7 @@ node maintenance/.system/audit.mjs init --id BL5-my-private-copy
 
 所有生成状态都必须保持私有。不要公开 `baseline.json`、`run/`、`proposal.json`、`proposal.md`、`proposals/`、迁移产生的 `.previous` 备份、锁或恢复材料。
 
-审计器实现本身不计入自传式记忆范围。`AGENTS.md` 或语义规则变化会改变策略指纹；只修改实现不会强迫全部记忆文档重新审计。
+审计器实现本身不计入自传式记忆范围。`AGENTS.md` 的完整文件内容参与策略指纹计算，因此措辞、格式或换行变化也会改变指纹；`.system/rules.json` 中参与计算的语义配置变化也会改变指纹。只修改实现不会强迫全部记忆文档重新审计。
 
 ## 推荐流程
 
@@ -167,6 +167,8 @@ node maintenance/.system/audit.mjs publish --file proposal-draft.json
 ### 6. 查看修改前与修改后
 
 `proposal.md` 先显示完整操作索引，再默认只展开 `suggested: true` 的操作。每项建议会显示操作类型、路径、精确修改前后和少量上下文；没有建议的文档和只读依赖不会被整篇铺开。
+
+严格只读任务可直接读取现有文件，或按需使用 `status`、`validate`、`scope`；`show` 可能重新生成 `proposal.md`，不属于严格只读命令。
 
 ```powershell
 node maintenance/.system/audit.mjs show --operation O1

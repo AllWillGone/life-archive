@@ -42,7 +42,7 @@ node maintenance/.system/audit.mjs init --id BL5-my-private-copy
 
 All generated state is private. Do not publish `baseline.json`, `run/`, `proposal.json`, `proposal.md`, `proposals/`, `.previous` migration backups, locks, or recovery material.
 
-The audit engine itself is outside the autobiographical memory scope. Changes to `AGENTS.md` or semantic rules change the policy fingerprint; implementation-only changes do not force every memory document through another audit.
+The audit engine itself is outside the autobiographical memory scope. The complete bytes of `AGENTS.md` participate in the policy fingerprint, so wording, formatting, and line-ending changes affect it. Relevant semantic configuration in `.system/rules.json` also affects it; implementation-only changes do not force every memory document through another audit.
 
 ## Recommended Workflow
 
@@ -167,6 +167,8 @@ Supported operations are `replace_exact_block`, `replace_file`, `create_file`, `
 ### 6. Review before and after
 
 `proposal.md` starts with a complete operation index, then expands only `suggested: true` operations by default. Each suggestion shows the operation type, path, exact before/after text, and limited context. Documents without suggestions and read-only dependencies are not dumped in full.
+
+For a strictly read-only task, read existing files directly or use `status`, `validate`, or `scope`. `show` may regenerate `proposal.md` and is not a strictly read-only command.
 
 ```powershell
 node maintenance/.system/audit.mjs show --operation O1
