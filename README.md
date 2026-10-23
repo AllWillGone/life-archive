@@ -2,11 +2,65 @@
 
 English | [简体中文](README.zh-CN.md)
 
-An autobiographical memory system for long-term, AI-assisted reflection. Current rule release: **4.2.0**.
+A place to preserve lived experience, revisit it with context, and carry it into the next conversation. Current rule release: **4.2.0**.
 
 LifeArchive is a public template for maintaining a private archive of lived events, relationships, emotional changes, and unresolved context. It keeps observable events, the user's feelings and interpretations, navigation summaries, and verbatim user messages in separate layers so that an AI assistant can restore context without flattening a life into one profile.
 
+Think of it as a personal archive you own and can keep adding to. You talk naturally with an assistant that can read and write files; the assistant follows the rules to organize relevant material. When a person, event, or concern comes up again, earlier records provide context for the conversation. You can also read, search, and edit the Markdown files yourself.
+
 This repository contains reusable rules and audit tooling, empty structure, templates, synthetic examples, and sanitized research notes only. It must not contain a real person's memory archive or the Git history of one.
+
+Jump to: [Why this project exists](#why-this-project-exists) · [What you can use it for](#what-you-can-use-it-for) · [Everyday use](#everyday-use) · [A worked example](#from-conversation-to-memory-an-example) · [Start safely](#start-safely) · [Starter prompt](#starter-prompt)
+
+## Why This Project Exists
+
+Meaningful personal context often starts as a sentence in a conversation: why a meeting mattered, how a decision came about, why a period was difficult, or what changed later. As conversations accumulate, those clues become scattered across dates and chats. Starting a new conversation can mean explaining the background all over again.
+
+A continually compressed personal profile also struggles to preserve change. “I dislike public speaking” says little about what happened, which situations felt difficult, whether there were exceptions, or how the person felt later. LifeArchive aims to retain concrete experiences and their sequence so that later understanding can return to the records.
+
+The goal is to let personal experiences accumulate over time, remain findable, and inform later conversations. The archive gives an assistant external context to read and gives its owner a history they can check for themselves.
+
+## What You Can Use It For
+
+| Situation | How you might use it | What the records contribute |
+| --- | --- | --- |
+| Continuing a conversation over time | Return to a person, event, or ongoing concern after a break | Restore current context and consult relevant experiences, reducing repeated background explanations |
+| Revisiting an important experience | Review a period of learning, work, moving, travel, or a relationship | Bring developments from several conversations into one event, preserving its beginning, progression, and outcome |
+| Understanding emotional change | Ask “Why did this matter to me then, and what changed later?” | Retain feelings and interpretations at different times rather than only the latest statement |
+| Following a relationship over time | Find interactions with the same person and changes in your own attitude | Use person entries to navigate events while distinguishing observable interactions from your interpretations |
+| Reviewing goals and decisions | Find why you started, what concerned you, and whether anything progressed | Preserve your expressed wishes, decisions, and actual actions for later reflection |
+| Preparing a personal review or autobiographical writing | Find past material by time, person, or topic | Navigate from summaries to detailed records and check original wording when needed |
+
+These uses depend on what was actually recorded. Missing experiences cannot be reconstructed from nothing, and wishes must not become completed actions. Records can support discussion of relationships and recurring feelings; they cannot establish another person's motives, a psychological diagnosis, or a future outcome on their own.
+
+## Everyday Use
+
+1. **Set up a private copy.** Follow [Start Safely](#start-safely), then let an assistant with file access read `AGENTS.md`. You can begin with one current experience; there is no need to write a complete autobiography or fill every directory first.
+2. **Talk as you normally would.** Share recent events, older memories, conflicting thoughts, and feelings. The rules ask the assistant to respond to the conversation first and quietly maintain the necessary records afterwards. You do not need to turn each message into fields or fill out a form.
+3. **Let related material build up.** Complete user messages from ordinary autobiographical conversations go into `session/`; new event details and emotional changes go into their respective files. Developments within the same event can be added over time. Summaries and indexes change only when necessary.
+4. **Resume with existing context.** In a new conversation, use the [starter prompt](#starter-prompt) so the assistant reads current state, overview, and indexes before opening records relevant to the topic. When switching assistants, give the new tool access to the files and rules too.
+5. **Review and check when useful.** Ask how something developed or what you originally said. Check the source before correcting an omission or misunderstanding. As the archive grows, the [periodic cleanup prompt](#periodic-cleanup-prompt) lets you review proposed changes before deciding whether to apply them.
+
+Everyday recording depends on your assistant carrying out these rules. The template does not listen to chats in the background, collect conversations from other platforms on a schedule, or synchronize memory to every AI service. Audits under `maintenance/` also require an explicit request. Basic records are Markdown files; the optional audit tooling additionally requires Node.js.
+
+## From Conversation to Memory: An Example
+
+This example is entirely fictional. Suppose you say:
+
+> I went to my first pottery class this week. The cup I was making collapsed, which felt a little discouraging. But I was absorbed in making it, and I want to go again next week.
+
+After responding, the assistant can preserve the message according to each layer's purpose:
+
+| Destination | What belongs there |
+| --- | --- |
+| `session/` | The complete user message, with its original wording and message boundary |
+| `fact/events/` | Attending a first pottery class this week and the cup collapsing; no invented exact date |
+| `feeling/by_event/` | Feeling a little discouraged, being absorbed in the process, and wanting to attend again |
+| `summary/current.md` | If this becomes an ongoing plan, a brief statement of the current intention and a link to the event; no full retelling or claim that the next visit already happened |
+
+Later, if you ask why you wanted to continue learning pottery, the assistant can follow the indexes to the experience and feelings, checking your original message if necessary. If your interest later declines, that change should be added with its time context while preserving the earlier feelings.
+
+For actual file examples, see the synthetic [learning event](examples/fact/events/2026-01-example-learning-project.md), [associated feelings](examples/feeling/by_event/2026-01-example-learning-project.md), and [brief overview](examples/summary/overview.md). They illustrate how records connect; they are not personal experiences to copy into your own archive.
 
 ## Core Model
 
@@ -18,6 +72,18 @@ This repository contains reusable rules and audit tooling, empty structure, temp
 - `experiments/` contains system research and is outside autobiographical memory.
 
 The underlying rule is simple: preserve the user's memory without rewriting it into something cleaner, safer-sounding, or more certain than the source supports.
+
+## Why the Layers Matter
+
+**Connect events; preserve messages by date.** One experience may come up across many days. An event file brings its developments together for review, while dated original messages provide a way to check what was said. Together they preserve both how something unfolded and how it was described at the time.
+
+**Give events and feelings their own space.** The same experience can carry several, even conflicting feelings, and later interpretations can change. Separate records let what happened and how you understood it inform each other. Source qualifiers such as “I suspect” and “they said” help keep interpretations from becoming unsupported conclusions.
+
+**Use summaries to find detail.** `current` holds what still affects the present; `overview` holds more stable background. People, topics, and the timeline offer different routes into the archive. New conversations begin with these entry points and consult relevant records as needed, avoiding a full archive load each time. Summaries can change, but must not become the only surviving version of an experience.
+
+**Keep the records in your hands.** Readable Markdown files let you search, back up, and move your material between tools. A different model can rebuild context from the same files; how well it understands and follows the method still depends on that assistant's capabilities and adherence to the rules.
+
+**Make the assistant's understanding checkable.** Links between messages, events, feelings, and summaries help expose omissions, filing errors, and over-compression. Comfort, advice, and analysis offered by the assistant stay in the conversation. Only wishes, decisions, actions, or outcomes the user subsequently expresses are recorded as their own new content.
 
 ## Repository Layout
 
